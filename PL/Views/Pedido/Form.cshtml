@@ -1,0 +1,56 @@
+﻿@model ML.Medicamento
+@{
+    ViewData["Title"] = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Form</h1>
+<hr />
+
+<div class="container">
+    @if(Model.Medicamentos != null)
+    {
+        if(Model.Medicamentos.Count > 0)
+        {
+            @using (Html.BeginForm("Form", "Pedido", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div>
+                    <p>Ingresa tu numbre para generar un nuevo pedido.</p>
+                    <label>Nombre</label>
+                    <input style="width:200px" name="nombre" placeholder="Nombre completo" class="form-control" />
+                </div>
+                <div>
+                    <button class="btn btn-success" type="submit">Generar</button>
+                </div>
+                <table class="table table-dark table-hover text-center">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th>Seleccionar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ML.Medicamento medicamento in Model.Medicamentos)
+                        {
+                            <tr>
+                                <td>@medicamento.Nombre</td>
+                                <td>@medicamento.Precio</td>
+                                <td class="d-flex justify-content-center"><input class="form-control" style="width:100px" name="cantidades[]" /></td>
+                                <td><input type="checkbox" class="form-check-input" name="medicamentos[]" value="@medicamento.IdMedicamento" /></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            
+        }
+        else
+        {
+            <div role="alert" class="alert alert-warning">
+                No hay medicamentos :c
+            </div>
+        }
+    }
+</div>

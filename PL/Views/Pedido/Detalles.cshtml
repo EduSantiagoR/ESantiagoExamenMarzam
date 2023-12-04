@@ -1,0 +1,58 @@
+﻿@model ML.MedicamentoPedido
+@{
+    ViewData["Title"] = "Detalles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center">Detalles</h1>
+<hr />
+<div>
+    @if(Model.Pedidos != null)
+    {
+        if(Model.Pedidos.Count > 0)
+        {
+            <table class="table table-dark table-hover text-center">
+                <thead>
+                    <tr>
+                        <th>Medicamento</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ML.MedicamentoPedido medicamento in Model.Pedidos)
+                    {
+                        <tr>
+                            <td>@medicamento.Medicamento.Nombre</td>
+                            <td>@medicamento.Medicamento.Precio</td>
+                            <td>@medicamento.Cantidad</td>
+                            <td class="tdTotal">@medicamento.Total</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Total: $ <label id="txtTotal"></label></td>
+                    </tr>
+                </tfoot>
+            </table>
+            
+        }
+    }
+    <div>
+        <a class="btn btn-danger" href="@Url.Action("GetAll","Pedido")">Volver</a>
+    </div>
+</div>
+<script type="text/javascript">
+    var listTotales = document.querySelectorAll(".tdTotal");
+    var sumaTotal = 0;
+    listTotales.forEach(function(td){
+        sumaTotal += parseInt(td.textContent);
+    });
+    document.getElementById("txtTotal").innerHTML = sumaTotal;
+
+</script>

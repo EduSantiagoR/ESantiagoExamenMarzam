@@ -1,0 +1,47 @@
+﻿@model ML.Pedido
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center">Pedidos</h1>
+<hr />
+<div>
+    <a class="btn btn-success" href="@Url.Action("Form","Pedido")">Nuevo pedido</a>
+</div>
+<hr />
+<div class="container">
+    @if(Model.Pedidos != null)
+    {
+        if(Model.Pedidos.Count > 0)
+        {
+            <table class="table table-dark table-hover text-center">
+                <thead>
+                    <tr>
+                        <th>Detalles</th>
+                        <th>Comprador</th>
+                        <th>Total</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(ML.Pedido pedido in Model.Pedidos)
+                    {
+                        <tr>
+                            <td><a class="btn btn-warning" href="@Url.Action("Detalles","Pedido",new{idPedido = pedido.IdPedido})"><i class="fa-solid fa-clipboard-list"></i></a></td>
+                            <td>@pedido.Comprador</td>
+                            <td>@pedido.Total</td>
+                            <td><a class="btn btn-danger" href="@Url.Action("Delete","Pedido",new{idPedido = pedido.IdPedido})"><i class="fa-solid fa-trash-can"></i></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div role="alert" class="alert alert-warning">
+                No hay pedidos registrados.
+            </div>
+        }
+    }
+</div>
